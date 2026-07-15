@@ -16,7 +16,7 @@ Upload your data and let AI explore, analyze, and visualize it for you.
 - **Framework:** Next.js 16 (App Router)
 - **UI:** Tailwind CSS v4 + shadcn/ui + Framer Motion
 - **Charts:** Plotly.js (react-plotly.js)
-- **AI:** OpenRouter API — 13 models selectable from the UI (GPT-4, Claude, Gemini, Llama, etc.)
+- **AI:** OpenRouter API — 3 models selectable from the UI (GPT-4.1 Mini, DeepSeek V4 Pro, MiMo V2.5)
 - **Data Parsing:** PapaParse (CSV) + SheetJS (Excel)
 - **Deployment:** Vercel
 

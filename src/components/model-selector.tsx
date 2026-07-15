@@ -6,18 +6,8 @@ import { ChevronDown, Cpu, Check } from "lucide-react";
 
 export const MODELS = [
   { id: "openai/gpt-4.1-mini", label: "GPT-4.1 Mini", provider: "OpenAI" },
-  { id: "openai/gpt-4o-mini", label: "GPT-4o Mini", provider: "OpenAI" },
-  { id: "openai/gpt-5.4-mini", label: "GPT-5.4 Mini", provider: "OpenAI" },
-  { id: "openai/gpt-5.6-luna", label: "GPT-5.6 Luna", provider: "OpenAI" },
-  { id: "openai/gpt-oss-20b", label: "GPT-OSS 20B", provider: "OpenAI" },
-  { id: "deepseek/deepseek-v4-flash", label: "DeepSeek V4 Flash", provider: "DeepSeek" },
   { id: "deepseek/deepseek-v4-pro", label: "DeepSeek V4 Pro", provider: "DeepSeek" },
   { id: "xiaomi/mimo-v2.5", label: "MiMo V2.5", provider: "Xiaomi" },
-  { id: "minimax/minimax-m3", label: "MiniMax M3", provider: "MiniMax" },
-  { id: "z-ai/glm-5.2", label: "GLM-5.2", provider: "Zhipu AI" },
-  { id: "nvidia/nemotron-3-ultra-550b-a55b:free", label: "Nemotron 3 Ultra", provider: "NVIDIA" },
-  { id: "tencent/hy3:free", label: "HY3", provider: "Tencent" },
-  { id: "moonshotai/kimi-k2.5", label: "Kimi K2.5", provider: "Moonshot" },
 ] as const;
 
 export type ModelId = (typeof MODELS)[number]["id"];
