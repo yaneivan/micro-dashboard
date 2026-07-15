@@ -1,44 +1,62 @@
 import type { DataSet } from "@/types";
-import { writeFileSync, readFileSync, existsSync, unlinkSync } from "fs";
-import { join } from "path";
 
-const DATA_DIR = join(process.cwd(), ".sessions");
+const inMemory = new Map<string, DataSet>();
 
-function ensureDir() {
-  const { mkdirSync } = require("fs");
-  if (!existsSync(DATA_DIR)) {
-    mkdirSync(DATA_DIR, { recursive: true });
+let DATA_DIR: string | null = null;
+let fsAvailable: boolean | null = null;
+
+function getDir(): string | null {
+  if (fsAvailable !== null) return DATA_DIR;
+  try {
+    const { existsSync, mkdirSync } = require("fs");
+    const { join } = require("path");
+    const dir = join(process.cwd(), ".sessions");
+    if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
+    DATA_DIR = dir;
+    fsAvailable = true;
+  } catch {
+    fsAvailable = false;
   }
-}
-
-function sessionPath(sessionId: string): string {
-  return join(DATA_DIR, `${sessionId}.json`);
+  return DATA_DIR;
 }
 
 export function saveDataSet(sessionId: string, data: DataSet): void {
-  ensureDir();
-  const payload = JSON.stringify(data);
-  writeFileSync(sessionPath(sessionId), payload, "utf-8");
+  const dir = getDir();
+  if (dir) {
+    try {
+      const { writeFileSync } = require("fs");
+      const { join } = require("path");
+      writeFileSync(join(dir, `${sessionId}.json`), JSON.stringify(data), "utf-8");
+      return;
+    } catch { /* fall through */ }
+  }
+  inMemory.set(sessionId, data);
 }
 
 export function getDataSet(sessionId: string): DataSet | undefined {
-  const p = sessionPath(sessionId);
-  if (!existsSync(p)) return undefined;
-  try {
-    const raw = readFileSync(p, "utf-8");
-    return JSON.parse(raw) as DataSet;
-  } catch {
-    return undefined;
+  const dir = getDir();
+  if (dir) {
+    try {
+      const { readFileSync, existsSync } = require("fs");
+      const { join } = require("path");
+      const p = join(dir, `${sessionId}.json`);
+      if (existsSync(p)) return JSON.parse(readFileSync(p, "utf-8")) as DataSet;
+    } catch { /* fall through */ }
   }
+  return inMemory.get(sessionId);
 }
 
 export function deleteDataSet(sessionId: string): boolean {
-  const p = sessionPath(sessionId);
-  if (existsSync(p)) {
-    unlinkSync(p);
-    return true;
+  const dir = getDir();
+  if (dir) {
+    try {
+      const { existsSync, unlinkSync } = require("fs");
+      const { join } = require("path");
+      const p = join(dir, `${sessionId}.json`);
+      if (existsSync(p)) { unlinkSync(p); return true; }
+    } catch { /* fall through */ }
   }
-  return false;
+  return inMemory.delete(sessionId);
 }
 
 export function generateSessionId(): string {
