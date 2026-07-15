@@ -38,8 +38,6 @@ OPENROUTER_API_KEY=sk-or-v1-your-key-here
 
 Get your key at [openrouter.ai](https://openrouter.ai/keys)
 
-The AI model is selected from the dropdown in the UI — no need to configure it in `.env`.
-
 ### 3. Run development server
 
 ```bash
