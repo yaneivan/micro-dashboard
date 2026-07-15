@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# build
+.next/
+out/
+
+# misc
+.DS_Store
+*.pem
+.env*.local
+
+# vercel
+.vercel
+
+# debug
+npm-debug.log*
+
+# test
+coverage/
+
+# sessions
+.dashboard-sessions/
