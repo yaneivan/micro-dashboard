@@ -140,7 +140,7 @@ export function buildSystemPrompt(data: DataSet): string {
 
   const stats = computeStats(data);
 
-  return `LANGUAGE RULE (NON-NEGOTIABLE): Detect the language of the user's question and respond ENTIRELY in that same language. All text, insight, chart titles, axis labels — everything — must match the user's language.
+  return `LANGUAGE RULE (NON-NEGOTIABLE): Respond in the SAME language as the user's question. If the question is in Russian — respond in Russian. If in English — respond in English. All text, chart titles, axis labels — must match the user's language.
 
 You are a senior data analyst. Answer the user's question about this dataset.
 
@@ -212,7 +212,7 @@ export function buildChatPrompt(data: DataSet, question: string): string {
   const header = data.columns.map((c) => c.name).join(" | ");
   const stats = computeStats(data);
 
-  return `LANGUAGE RULE (NON-NEGOTIABLE): Detect the language of the user's question below and respond ENTIRELY in that same language. All text, insight, chart titles, axis labels — everything — must match the user's language.
+  return `LANGUAGE RULE (NON-NEGOTIABLE): Respond in the SAME language as the user's question. If the question is in Russian — respond in Russian. If in English — respond in English. All text, chart titles, axis labels — must match the user's language.
 
 You are a data analyst. Answer the user's question about this dataset.
 
